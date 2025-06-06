@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { usePrivy } from "@privy-io/react-auth";
 import {
   IconAlertCircle,
   IconCircleDashedCheck,
@@ -7,9 +6,10 @@ import {
   IconHourglassHigh,
   IconUserScan,
 } from "@tabler/icons-react";
-import { usePrivy } from "@privy-io/react-auth";
-import MetricsCard from "./MetricsCard"; // Adjust the import path
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../context"; // Ensure correct import path
+import MetricsCard from "./MetricsCard"; // Adjust the import path
 
 const DisplayInfo = () => {
   const navigate = useNavigate();
@@ -26,6 +26,8 @@ const DisplayInfo = () => {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
+      
       fetchUserByEmail(user.email.address)
         .then(() => {
           console.log(records);
@@ -89,9 +91,9 @@ const DisplayInfo = () => {
       subtitle: "View",
       value: `${metrics.completedScreenings} of ${metrics.totalScreenings}`,
       icon: IconCircleDashedCheck,
-
       onClick: () => navigate("/treatment/progress"),
     },
+    
     {
       title: "Total Folders",
       subtitle: "View",

@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import { usePrivy } from "@privy-io/react-auth";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../context"; // Adjust the import path
 
-import { CustomButton } from ".";
-import { menu, search } from "../assets";
-import { navlinks } from "../constants";
 import { IconHeartHandshake } from "@tabler/icons-react";
+import { CustomButton } from ".";
+import { menu } from "../assets";
+import { navlinks } from "../constants";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -40,8 +40,10 @@ const Navbar = () => {
   const handleLoginLogout = useCallback(() => {
     if (authenticated) {
       logout();
+      navigate("/onboarding")
     } else {
       login().then(() => {
+        
         if (user) {
           fetchUserInfo();
         }
@@ -50,23 +52,10 @@ const Navbar = () => {
   }, [authenticated, login, logout, user, fetchUserInfo]);
 
   return (
-    <div className="mb-[35px] flex flex-col-reverse justify-between gap-6 md:flex-row">
-      <div className="flex h-[52px] max-w-[458px] flex-row rounded-[100px] bg-[#1c1c24] py-2 pl-4 pr-2 lg:flex-1">
-        <input
-          type="text"
-          placeholder="Search for records"
-          className="flex w-full bg-transparent font-epilogue text-[14px] font-normal text-white outline-none placeholder:text-[#4b5264]"
-        />
-        <div className="flex h-full w-[72px] cursor-pointer items-center justify-center rounded-[20px] bg-[#4acd8d]">
-          <img
-            src={search}
-            alt="search"
-            className="h-[15px] w-[15px] object-contain"
-          />
-        </div>
-      </div>
+    <div className="mb-[35px] flex flex-col-reverse justify-end gap-6 md:flex-row">
+      
 
-      <div className="hidden flex-row justify-end gap-2 sm:flex">
+      <div className="hidden flex-row justify-end gap-2 sm:flex py-4 h-20">
         <CustomButton
           btnType="button"
           title={authenticated ? "Log Out" : "Log In"}
@@ -93,14 +82,14 @@ const Navbar = () => {
           <ul className="mb-4">
             {navlinks.map((link) => (
               <li
-                key={link.name}
-                className={`flex p-4 ${isActive === link.name && "bg-[#3a3a43]"}`}
-                onClick={() => {
-                  setIsActive(link.name);
-                  setToggleDrawer(false);
-                  navigate(link.link);
-                }}
-              >
+              key={link.name}
+              className={`flex p-4 ${isActive === link.name ? "bg-[#3a3a43]" : ""}`}
+              onClick={() => {
+                setIsActive(link.name);
+                setToggleDrawer(false);
+                navigate(link.link);
+              }}
+            >
                 <img
                   src={link.imgUrl}
                   alt={link.name}
@@ -109,7 +98,7 @@ const Navbar = () => {
                   }`}
                 />
                 <p
-                  className={`ml-[20px] font-epilogue text-[14px] font-semibold ${
+                  className={`ml-[20px] py-4 font-epilogue text-[14px] font-semibold ${
                     isActive === link.name ? "text-[#1dc071]" : "text-[#808191]"
                   }`}
                 >

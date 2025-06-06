@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { IconCirclePlus } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
 import { usePrivy } from "@privy-io/react-auth";
+import { IconCirclePlus } from "@tabler/icons-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../../context/index";
 import CreateRecordModal from "./components/create-record-modal"; // Adjust the import path
 import RecordCard from "./components/record-card"; // Adjust the import path

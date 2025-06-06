@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { db } from "../utils/dbConfig"; // Adjust the path to your dbConfig
 import { Users, Records } from "../utils/schema"; // Adjust the path to your schema definitions
@@ -37,6 +38,21 @@ export const StateContextProvider = ({ children }) => {
       console.error("Error fetching user by email:", error);
     }
   }, []);
+
+  const checkIfUserExists = useCallback(async (email) => {
+    try {
+      const result = await db
+        .select()
+        .from(Users)
+        .where(eq(Users.createdBy, email))
+        .execute();
+      return result.length > 0 ? result[0] : null;
+    } catch (error) {
+      console.error("Error checking if user exists:", error);
+      return null;
+    }
+  }, []);
+  
 
   // Function to create a new user
   const createUser = useCallback(async (userData) => {
@@ -111,6 +127,7 @@ export const StateContextProvider = ({ children }) => {
         createRecord,
         currentUser,
         updateRecord,
+        checkIfUserExists,
       }}
     >
       {children}

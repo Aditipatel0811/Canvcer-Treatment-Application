@@ -1,6 +1,6 @@
+import { IconProgress } from "@tabler/icons-react";
 import React from "react";
 import Modal from "./Modal";
-import { IconProgress } from "@tabler/icons-react";
 
 const FileUploadModal = ({
   isOpen,
@@ -51,17 +51,28 @@ const FileUploadModal = ({
         </div>
         <small id="validFileFormats">PNG, PDF, JPEG - Max 5MB</small>
       </div>
+
       {uploading && (
-        <IconProgress
-          size={15}
-          className="mr-3 mt-3 h-7 w-5 animate-spin text-white"
-        />
+        <div className="mt-4 flex items-center justify-center gap-2">
+          <IconProgress
+            size={20}
+            className="animate-spin text-white dark:text-slate-300"
+          />
+          <p className="text-sm text-white dark:text-slate-300">Uploading...</p>
+        </div>
       )}
 
       {uploadSuccess && (
-        <p className="mt-2 text-green-600">Upload successful!</p>
+        <p className="mt-2 text-green-600 dark:text-green-400">
+          Upload successful!
+        </p>
       )}
-      <span className="text-md text-left text-white">{filename}</span>
+
+      {filename && (
+        <span className="mt-2 text-sm text-white dark:text-slate-300">
+          Selected file: {filename}
+        </span>
+      )}
     </Modal>
   );
 };

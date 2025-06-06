@@ -1,4 +1,3 @@
-import React, { useMemo, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -7,10 +6,11 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { IconPlus } from "@tabler/icons-react";
+import React, { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import ColumnContainer from "./ColumnContainer";
 import TaskCard from "./TaskCard";
-import { IconPlus } from "@tabler/icons-react";
 
 function KanbanBoard({ state }) {
   const defaultCols =

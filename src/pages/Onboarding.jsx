@@ -1,19 +1,22 @@
+import { usePrivy } from "@privy-io/react-auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../context";
-import { usePrivy } from "@privy-io/react-auth";
 
 const Onboarding = () => {
   const { createUser } = useStateContext();
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
   const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user } = usePrivy();
 
-  console.log(user);
+
   const handleOnboarding = async (e) => {
     e.preventDefault();
+    setLoading(true); // loading spinner control
+  
     const userData = {
       username,
       age: parseInt(age, 10),
@@ -23,13 +26,17 @@ const Onboarding = () => {
       folder: [],
       createdBy: user.email.address,
     };
-
-    console.log(userData);
+  
     const newUser = await createUser(userData);
+    setLoading(false);
+  
     if (newUser) {
-      navigate("/profile");
+      navigate("/DisplayInfo");
+    } else {
+      alert("Something went wrong!");
     }
   };
+  
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#13131a]">
@@ -38,6 +45,11 @@ const Onboarding = () => {
         <h2 className="mb-6 text-center text-2xl font-bold text-white">
           Welcome! Let's get started
         </h2>
+        {loading && (
+        <p className="text-white text-center mb-4 animate-pulse">
+          Saving your info...
+        </p>
+      )}
         <form onSubmit={handleOnboarding}>
           <div className="mb-4">
             <label
@@ -88,7 +100,7 @@ const Onboarding = () => {
             type="submit"
             className="mt-4 w-full rounded-lg bg-green-600 py-3 font-semibold text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
           >
-            Get Started
+            Save
           </button>
         </form>
       </div>

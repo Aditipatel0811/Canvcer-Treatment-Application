@@ -1,5 +1,5 @@
-import React from "react";
 import { IconX } from "@tabler/icons-react";
+import React from "react";
 
 const Modal = ({ title, children, isOpen, onClose, onAction, actionLabel }) => {
   if (!isOpen) return null;

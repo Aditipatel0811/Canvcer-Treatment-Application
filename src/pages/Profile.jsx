@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { useStateContext } from "../context";
 import { usePrivy } from "@privy-io/react-auth";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { currentUser, fetchUserByEmail } = useStateContext();
   const { user } = usePrivy();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!currentUser) {
       fetchUserByEmail(user?.email?.address);
+      navigate("/onboarding");
     }
   }, [currentUser, fetchUserByEmail]);
 

@@ -1,23 +1,32 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { Sidebar, Navbar } from "./components";
-import { Home, Profile, Onboarding } from "./pages";
-import MedicalRecords from "./pages/records/index";
-import ScreeningSchedule from "./pages/ScreeningSchedule";
-import SingleRecordDetails from "./pages/records/single-record-details";
+import { Navbar, Sidebar } from "./components";
 import { useStateContext } from "./context";
+import { Home, Onboarding, Profile } from "./pages";
+import MedicalRecords from "./pages/records/index";
+import SingleRecordDetails from "./pages/records/single-record-details";
+import ScreeningSchedule from "./pages/ScreeningSchedule";
 
 const App = () => {
-  const { user, authenticated, ready, login, currentUser } = useStateContext();
+  const { user, authenticated, ready, login, currentUser, checkIfUserExists } = useStateContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ready && !authenticated) {
-      login();
-    } else if (user && !currentUser) {
-      navigate("/onboarding");
-    }
-  }, [user, authenticated, ready, login, currentUser, navigate]);
+    const handleRedirect = async () => {
+      if (ready && !authenticated) {
+        login();
+      } else if (user && user.email?.address) {
+        const existingUser = await checkIfUserExists(user.email.address);
+        if (existingUser) {
+          navigate("/DisplayInfo"); // redirect to display page if user exists
+        } else {
+          navigate("/Onboarding"); // Otherwise go to onboarding
+        }
+      }
+    };
+  
+    handleRedirect();
+  }, [user, authenticated, ready, login, checkIfUserExists, navigate]);
 
   return (
     <div className="sm:-8 relative flex min-h-screen flex-row bg-[#13131a] p-4">

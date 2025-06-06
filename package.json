@@ -20,6 +20,8 @@
     "@thirdweb-dev/react": "^3",
     "@thirdweb-dev/sdk": "^3",
     "appwrite": "14.0.1",
+    "buffer": "^6.0.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.32.1",
     "ethers": "^5.7.2",
@@ -38,7 +40,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^2",
     "autoprefixer": "^10.4.13",
-    "drizzle-kit": "^0.23.0",
+    "drizzle-kit": "^0.23.2",
     "postcss": "^8.4.19",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.5",

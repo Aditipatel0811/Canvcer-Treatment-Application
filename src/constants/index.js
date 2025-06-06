@@ -1,4 +1,4 @@
-import { records, screening, user, apps } from "../assets";
+import { apps, records, screening, user } from "../assets";
 
 export const navlinks = [
   {

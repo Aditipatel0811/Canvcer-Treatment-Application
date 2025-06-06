@@ -1,5 +1,5 @@
-import React from "react";
 import { IconChevronRight } from "@tabler/icons-react";
+import React from "react";
 
 const MetricsCard = ({
   title,
